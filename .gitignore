@@ -1,0 +1,13 @@
+# Ignore everything:
+*
+
+# Do not ignore these files:
+!.gitignore
+!.github/*
+!definitions
+!definitions_tests
+!dagster_cloud.yaml
+!pyproject.toml
+!README.md
+!setup.cfg
+!setup.py
