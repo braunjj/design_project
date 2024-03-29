@@ -5,7 +5,10 @@
 !.gitignore
 !.github/*
 !definitions
+!definitions/*
+!definitions/assets/*
 !definitions_tests
+!definitions_tests/*
 !dagster_cloud.yaml
 !pyproject.toml
 !README.md
