@@ -1,0 +1,16 @@
+# Ignore everything:
+*
+
+# Do not ignore these files:
+!.gitignore
+!.github/*
+!quickstart_etl/
+!quickstart_etl/*
+!quickstart_etl/assets/*
+!quickstart_etl_tests
+!quickstart_etl_tests/*
+!dagster_cloud.yaml
+!pyproject.toml
+!README.md
+!setup.cfg
+!setup.py
