@@ -12,5 +12,6 @@ daily_refresh_schedule = ScheduleDefinition(
 )
 
 defs = Definitions(
-    assets=load_assets_from_package_module(assets), schedules=[daily_refresh_schedule]
+    assets=load_assets_from_package_module(assets), 
+    schedules=[daily_refresh_schedule]
 )
