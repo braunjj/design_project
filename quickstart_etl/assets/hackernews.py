@@ -51,6 +51,9 @@ def topstories(context: AssetExecutionContext) -> MaterializeResult:
         }
     )
 
+@asset()
+def test_asset():
+    pass
 
 @asset(deps=[topstories], group_name="hackernews", compute_kind="Plot")
 def most_frequent_words(context: AssetExecutionContext) -> MaterializeResult:
