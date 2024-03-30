@@ -10,6 +10,8 @@ import time
     compute_kind="sling", 
     code_version="4",
     freshness_policy = FreshnessPolicy(maximum_lag_minutes=60),
+        owners=["gilfoyle@piedpiper.com", "team: ingest"],
+    tags={"priority": "1", "consumer": "analytics"},
     )
 def reservations():
     """
@@ -115,8 +117,10 @@ import time
     group_name="RAW_DATA", 
     compute_kind="stripe", 
     code_version="2",
-    metadata={"owner": "josh@mycompany.com", "priority": "high", "team": "sales"},
+    metadata={},
     freshness_policy = FreshnessPolicy(maximum_lag_minutes=60),
+        owners=["gilfoyle@piedpiper.com", "team: ingest"],
+    tags={"priority": "1", "consumer": "analytics"},
     )
 def orders():
     """
@@ -152,6 +156,8 @@ def orders():
     compute_kind="stripe", 
     code_version="1",
     description="A table containing all users data",
+    owners=["gilfoyle@piedpiper.com", "team: ingest"],
+    tags={"priority": "1", "consumer": "analytics"},
     )
 def users():
     time.sleep(1)
@@ -161,6 +167,8 @@ def users():
     group_name="RAW_DATA", 
     compute_kind="sling", 
     code_version="1",
+    owners=["gilfoyle@piedpiper.com", "team: ingest"],
+    tags={"priority": "1", "consumer": "analytics"},
     )
 def locations():
     time.sleep(1)
@@ -172,6 +180,8 @@ def locations():
     compute_kind="dbt", 
     code_version="1",
     description="dbt model for: orders_cleaned",
+        owners=["gilfoyle@piedpiper.com", "team: analytics"],
+    tags={"priority": "1", "consumer": "analytics"},
     )
 def orders_cleaned(orders):
     time.sleep(1)
@@ -182,6 +192,8 @@ def orders_cleaned(orders):
     compute_kind="dbt", 
     code_version="1",
     description="dbt model for: locations_cleaned",
+        owners=["gilfoyle@piedpiper.com", "team: analytics"],
+    tags={"priority": "1", "consumer": "analytics"},
     )
 def locations_cleaned(locations):
     time.sleep(1)
@@ -193,6 +205,8 @@ def locations_cleaned(locations):
     compute_kind="dbt", 
     code_version="1",
     description="dbt model for: users_cleaned",
+    owners=["gilfoyle@piedpiper.com", "team: analytics"],
+    tags={"priority": "1", "consumer": "analytics"},
     )
 def users_cleaned(users):
     time.sleep(1)
@@ -203,7 +217,8 @@ def users_cleaned(users):
     compute_kind="dbt", 
     code_version="1",
     description="dbt model for: reservations_cleaned",
-    tags={"priority": "high"},
+    owners=["gilfoyle@piedpiper.com", "team: analytics"],
+    tags={"priority": "1", "consumer": "analytics"},
     )
 def reservations_cleaned(reservations):
     time.sleep(1)
@@ -215,7 +230,8 @@ def reservations_cleaned(reservations):
     compute_kind="dbt", 
     code_version="1",
     description="dbt model for: orders_augmented",
-    owners=["pete@hooli.com","team: Sales Ops"]
+    owners=["gilfoyle@piedpiper.com", "team: analytics"],
+    tags={"priority": "3", "consumer": "sales ops", "consumer": "ml"},
     )
 def orders_augmented(orders_cleaned, users_cleaned, locations_cleaned):
     time.sleep(1)
@@ -226,8 +242,8 @@ def orders_augmented(orders_cleaned, users_cleaned, locations_cleaned):
     compute_kind="dbt", 
     code_version="1",
     description="dbt model for: company_stats",
-    owners=["pete@hooli.com","team: Sales Ops"],
-    tags={"priority": "critical", "consumer": "sales"},
+    owners=["gilfoyle@piedpiper.com", "team: analytics"],
+    tags={"priority": "2", "consumer": "sales ops", "consumer": "ml"},
     )
 def company_stats(orders_augmented):
     time.sleep(1)
@@ -238,7 +254,9 @@ def company_stats(orders_augmented):
     compute_kind="dbt", 
     code_version="1",
     description="dbt model for: order_stats",
-    owners=["pete@hooli.com","team: Sales Ops"]
+    owners=["dinesh@piedpiper.com", "team: analytics"],
+    tags={"priority": "3", "consumer": "sales ops", "consumer": "ml"},
+
     )
 def order_stats(orders_augmented):
     time.sleep(1)
@@ -248,8 +266,8 @@ def order_stats(orders_augmented):
     group_name="ANALYTICS", 
     compute_kind="dbt", 
     code_version="1",
-    description="dbt model for: sku_stats",
-    owners=["pete@hooli.com","team: Sales Ops"]
+    owners=["dinesh@piedpiper.com", "team: analytics"],
+    tags={"priority": "3", "consumer": "sales ops", "consumer": "ml",},
     )
 def sku_stats(orders_augmented):
     time.sleep(1)
@@ -259,8 +277,8 @@ def sku_stats(orders_augmented):
     group_name="ANALYTICS", 
     compute_kind="dbt", 
     code_version="1",
-    description="dbt model for: weekly_order_summary",
-    owners=["pete@hooli.com","team: Sales Ops"]
+    owners=["richard@piedpiper.com", "team: analytics"],
+    tags={"priority": "3", "consumer": "sales ops", "consumer": "ml"},
     )
 def weekly_order_summary(order_stats):
     time.sleep(1)
@@ -271,7 +289,8 @@ def weekly_order_summary(order_stats):
     compute_kind="dbt", 
     code_version="1",
     description="dbt model for: company_perf",
-    owners=["pete@hooli.com","team: Sales Ops"]
+    owners=["richard@piedpiper.com", "team: analytics"],
+    tags={"priority": "1", "consumer": "sales ops", "consumer": "ml", "consumer": "marketing"},
     )
 def company_perf(order_stats):
     time.sleep(1)
@@ -283,7 +302,8 @@ def company_perf(order_stats):
     compute_kind="scikit learn", 
     code_version="1",
     description="model parameters that best fit the weekly order summary data",
-    owners=["pete@hooli.com","team: Sales Ops"]
+    owners=["richard@piedpiper.com", "team: analytics"],
+    tags={"priority": "1", "consumer": "sales ops", "consumer": "ml", "consumer": "marketing"},
     )
 def order_forecast_model(weekly_order_summary):
     time.sleep(1)
@@ -294,8 +314,8 @@ def order_forecast_model(weekly_order_summary):
     group_name="FORECASTING", 
     compute_kind="python", 
     code_version="1",
-    description="predicted orders for the 30 days",
-    owners=["pete@hooli.com","team: Sales Ops"]
+    owners=["richard@piedpiper.com", "team: ml"],
+    tags={"priority": "1"},
     )
 def predicted_orders(weekly_order_summary, order_forecast_model):
     time.sleep(1)
@@ -305,8 +325,8 @@ def predicted_orders(weekly_order_summary, order_forecast_model):
     group_name="FORECASTING", 
     compute_kind="databricks", 
     code_version="1",
-    description="days where predicted orders surpass 1000",
-    owners=["pete@hooli.com","team: Sales Ops"]
+    owners=["richard@piedpiper.com", "team: ml"],
+    tags={"priority": "1"},
     )
 def big_orders(predicted_orders):
     time.sleep(1)
@@ -316,8 +336,8 @@ def big_orders(predicted_orders):
     group_name="FORECASTING", 
     compute_kind="scikit learn",
     code_version="1",
-    description="model errors by month",
-    owners=["pete@hooli.com","team: Sales Ops"]
+    owners=["richard@piedpiper.com", "team: ml"],
+    tags={"priority": "1"},
     )
 def model_stats_by_month(weekly_order_summary, order_forecast_model):
     time.sleep(1)
@@ -327,6 +347,8 @@ def model_stats_by_month(weekly_order_summary, order_forecast_model):
     group_name="FORECASTING", 
     compute_kind="python",
     code_version="1",
+    owners=["dinesh@piedpiper.com", "team: ml"],
+    tags={"priority": "1"},
     )
 def small_orders(predicted_orders):
     time.sleep(1)
@@ -336,8 +358,8 @@ def small_orders(predicted_orders):
     group_name="FORECASTING", 
     compute_kind="jupyter",
     code_version="1",
-    description="Backed by a notebook",
-    owners=["pete@hooli.com","team: Sales Ops"]
+    owners=["dinesh@piedpiper.com", "team: ml"],
+    tags={"priority": "1"},
     )
 def model_nb(weekly_order_summary, order_forecast_model):
     time.sleep(1)
@@ -349,7 +371,8 @@ def model_nb(weekly_order_summary, order_forecast_model):
     compute_kind="Python",
     code_version="1",
     description="Computes avg order KPI, must be updated regularly for exec dashboard",
-    owners=["pete@hooli.com","team: Sales Ops"]
+    owners=["dinesh@piedpiper.com", "team: analytics"],
+    tags={"priority": "1"},
     )
 def avg_orders(company_perf):
     time.sleep(1)
@@ -360,7 +383,8 @@ def avg_orders(company_perf):
     compute_kind="Python",
     code_version="1",
     description="Computes min order",
-    owners=["pete@hooli.com","team: Sales Ops"]
+    owners=["dinesh@piedpiper.com", "team: analytics"],
+    tags={"priority": "2"},
     )
 def min_order(company_perf):
     time.sleep(1)
@@ -371,7 +395,8 @@ def min_order(company_perf):
     compute_kind="Hex",
     code_version="1",
     description="Creates a file for a BI tool based on the current quarters top product, represented as a dynamic partition",
-    owners=["pete@hooli.com","team: Sales Ops"]
+    owners=["dinesh@piedpiper.com", "team: analytics"],
+    tags={"priority": "2"},
     )
 def key_product_deepdive(sku_stats):
     time.sleep(1)
