@@ -252,7 +252,7 @@ def company_stats(orders_augmented):
 @asset(
     group_name="ANALYTICS", 
     compute_kind="dbt", 
-    code_version="1",
+    code_version="2",
     description="dbt model for: order_stats",
     owners=["dinesh@piedpiper.com", "team: analytics"],
     tags={"priority": "3", "consumer": "sales ops", "consumer": "ml"},
