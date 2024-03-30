@@ -1,6 +1,8 @@
 from dagster import (
     asset,
     FreshnessPolicy,
+    MaterializeResult,
+    MetadataValue,
 )
 import random
 import time
@@ -117,9 +119,8 @@ import time
     group_name="RAW_DATA", 
     compute_kind="stripe", 
     code_version="2",
-    metadata={},
     freshness_policy = FreshnessPolicy(maximum_lag_minutes=60),
-        owners=["gilfoyle@piedpiper.com", "team: ingest"],
+    owners=["gilfoyle@piedpiper.com", "team: ingest"],
     tags={"priority": "1", "consumer": "analytics"},
     )
 def orders():
@@ -169,10 +170,45 @@ def users():
     code_version="1",
     owners=["gilfoyle@piedpiper.com", "team: ingest"],
     tags={"priority": "1", "consumer": "analytics"},
+    metadata={"partition_expr": "order_date", "date_created": "2021-01-01", "created_by": "gilfoyle@piedpiper.com", },
+
     )
 def locations():
+    """
+    ## My asset
+    A view of asset metrics used for consumption management reporting in the app
+
+    ### Raw SQL:
+    ```sql
+    {{ config(snowflake_warehouse="L_WAREHOUSE") }}
+
+    with deduped_internal_asset_materialization_events as (
+        select * from {{ ref('reporting_deduped_internal_asset_materialization_metrics') }}
+    ),
+
+    metadata_asset_materialization_events as (
+        select * from {{ ref('reporting_metadata_asset_materialization_metrics') }}
+    )
+
+    (
+        select * from deduped_internal_asset_materialization_events
+    )
+    union
+    (
+        select * from metadata_asset_materialization_events
+    )
+    ```
+    """
     time.sleep(1)
-    pass
+    return MaterializeResult(
+        metadata={
+            "num_records": 15822,  # Metadata can be any key-value pair
+            "started_at": "2024-03-30T00:05:03",
+            "completed_at" : "2024-03-30T00:05:03",
+            "duration": 1.945631,
+            # The `MetadataValue` class has useful static methods to build Metadata
+        }
+    )
 
 
 @asset(
