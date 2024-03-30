@@ -116,7 +116,7 @@ import time
     compute_kind="stripe", 
     code_version="2",
     metadata={"owner": "josh@mycompany.com", "priority": "high", "team": "sales"},
-    freshness_policy = FreshnessPolicy(maximum_lag_minutes=3),
+    freshness_policy = FreshnessPolicy(maximum_lag_minutes=60),
     )
 def orders():
     """
@@ -264,7 +264,7 @@ def sku_stats(orders_augmented):
     )
 def weekly_order_summary(order_stats):
     time.sleep(1)
-    raise Exception("Failed!")
+    pass
 
 @asset(
     group_name="ANALYTICS", 
@@ -325,10 +325,10 @@ def model_stats_by_month(weekly_order_summary, order_forecast_model):
 
 @asset(
     group_name="FORECASTING", 
-    compute_kind="kubernetes",
+    compute_kind="python",
     code_version="1",
     )
-def k8s_pod_asset(predicted_orders):
+def small_orders(predicted_orders):
     time.sleep(1)
     pass
 
@@ -340,5 +340,39 @@ def k8s_pod_asset(predicted_orders):
     owners=["pete@hooli.com","team: Sales Ops"]
     )
 def model_nb(weekly_order_summary, order_forecast_model):
+    time.sleep(1)
+    pass
+
+
+@asset(
+    group_name="MARKETING", 
+    compute_kind="Python",
+    code_version="1",
+    description="Computes avg order KPI, must be updated regularly for exec dashboard",
+    owners=["pete@hooli.com","team: Sales Ops"]
+    )
+def avg_orders(company_perf):
+    time.sleep(1)
+    pass
+
+@asset(
+    group_name="MARKETING", 
+    compute_kind="Python",
+    code_version="1",
+    description="Computes min order",
+    owners=["pete@hooli.com","team: Sales Ops"]
+    )
+def min_order(company_perf):
+    time.sleep(1)
+    pass
+
+@asset(
+    group_name="MARKETING", 
+    compute_kind="Hex",
+    code_version="1",
+    description="Creates a file for a BI tool based on the current quarters top product, represented as a dynamic partition",
+    owners=["pete@hooli.com","team: Sales Ops"]
+    )
+def key_product_deepdive(sku_stats):
     time.sleep(1)
     pass

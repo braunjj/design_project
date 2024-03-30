@@ -1,4 +1,4 @@
 locations:
 - code_source:
     package_name: quickstart_etl
-  location_name: design_test
+  location_name: data_platform
