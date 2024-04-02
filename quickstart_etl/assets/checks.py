@@ -9,7 +9,7 @@ import time
 from .hooli import *
 
 @asset_check(asset=locations)
-def randomly_fails():
+def non_null():
     is_serious = True
     coinFlip = random.choice([True, False])
     time.sleep(2.5)
@@ -19,7 +19,7 @@ def randomly_fails():
     )
 
 @asset_check(asset=locations)
-def fails_less_often():
+def valid_email():
     is_serious = True
     coinFlip = random.choice([True, False])
     time.sleep(4)
@@ -29,7 +29,7 @@ def fails_less_often():
     )
 
 @asset_check(asset=locations)
-def res_id_has_no_nulls():
+def valid_phone():
     is_serious = False
     coinFlip = random.choice([True, False])
     return AssetCheckResult(
@@ -38,7 +38,7 @@ def res_id_has_no_nulls():
     )
 
 @asset_check(asset=locations)
-def valid_email():
+def unique_userid():
     is_serious = False
     coinFlip = random.choice([True, False])
 
