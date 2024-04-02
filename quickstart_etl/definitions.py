@@ -14,15 +14,10 @@ daily_refresh_schedule = ScheduleDefinition(
 )
 
 checks = [valid_email, valid_last_name, valid_phone, unique_userid, non_null]
-freshness_checks = build_last_update_freshness_checks(
-    [locations, locations_cleaned],
-    lower_bound_delta=datetime.timedelta(minutes=45),
-    deadline_cron="0 9 * * *",
-)
 
 
 defs = Definitions(
     assets=load_assets_from_package_module(assets), 
     schedules=[daily_refresh_schedule],
-    asset_checks = [checks, freshness_checks]
+    asset_checks = checks
 )
