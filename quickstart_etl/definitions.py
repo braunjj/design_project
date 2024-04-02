@@ -3,7 +3,6 @@ from dagster import (
     ScheduleDefinition,
     define_asset_job,
     load_assets_from_package_module,
-    build_last_update_freshness_checks
 )
 from datetime import datetime
 from . import assets
