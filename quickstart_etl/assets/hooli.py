@@ -171,7 +171,7 @@ def users():
     tags={"priority": "1", "consumer": "analytics"},
     )
 def locations():
-        """
+    """
     This table contains one row for each location.
 
 Raw SQL:
