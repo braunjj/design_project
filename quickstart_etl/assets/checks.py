@@ -2,6 +2,7 @@ from dagster import (
     AssetCheckResult,
     AssetCheckSeverity,
     asset_check,
+    build_last_update_freshness_checks
 )
 import random
 import time
