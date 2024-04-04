@@ -281,8 +281,16 @@ def orders_cleaned(orders):
     compute_kind="dbt", 
     code_version="1",
     description="dbt model for: locations_cleaned",
-        owners=["gilfoyle@piedpiper.com", "team: analytics"],
+    owners=["gilfoyle@piedpiper.com", "team: analytics"],
     tags={"support_tier": "1", "consumer": "finance"},
+    metadata={
+        "num_records": 10251,
+        "rows_modified":854,
+        "sync_time": "72.24",
+        "sync_start": "Mar 31, 10:51 PM", 
+        "total_elapsed_time": "86:24",
+        "nulls": "0"
+    },
     )
 def locations_cleaned(locations):
     time.sleep(1)
