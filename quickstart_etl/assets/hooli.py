@@ -169,6 +169,14 @@ def users():
     code_version="1",
     owners=["gilfoyle@piedpiper.com", "team: ingest"],
     tags={"support_tier": "1", "consumer": "analytics"},
+    metadata={
+        "num_records": 10251,
+        "rows_modified":854,
+        "sync_time": "72.24",
+        "sync_start": "Mar 31, 10:51 PM", 
+        "total_elapsed_time": "86:24",
+        "nulls": "0"
+    },
     )
 def locations():
     """
@@ -283,14 +291,6 @@ def orders_cleaned(orders):
     description="dbt model for: locations_cleaned",
     owners=["gilfoyle@piedpiper.com", "team: analytics"],
     tags={"support_tier": "1", "consumer": "finance"},
-    metadata={
-        "num_records": 10251,
-        "rows_modified":854,
-        "sync_time": "72.24",
-        "sync_start": "Mar 31, 10:51 PM", 
-        "total_elapsed_time": "86:24",
-        "nulls": "0"
-    },
     )
 def locations_cleaned(locations):
     time.sleep(1)
